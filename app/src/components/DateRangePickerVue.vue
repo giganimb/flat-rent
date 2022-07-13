@@ -4,6 +4,9 @@
             <div class="text-h6">Выберите дату</div>
         </v-row>
         <vc-date-picker
+            is-expanded
+            :min-date="new Date()"
+            :max-date="endOfCalendar"
             v-model="range"
             mode="date"
             :masks="masks"
@@ -24,6 +27,7 @@
                                         :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
                                         :value="inputValue.start"
                                         v-on="inputEvents.start"
+                                        @input="onInputStartValueUpdate"
                                     />
                                 </v-card>
                             </div>
@@ -36,6 +40,7 @@
                                         :class="isDragging ? 'text-gray-600' : 'text-gray-00'"
                                         :value="inputValue.end"
                                         v-on="inputEvents.end"
+                                        @input="onInputEndValueUpdate"
                                     />
                                 </v-card>
                             </div>
@@ -52,14 +57,32 @@
         name: "DateRangePickerVue",
         data() {
             return {
+                endOfCalendar: "",
                 range: {
-                    start: new Date(2020, 0, 6),
-                    end: new Date(2020, 0, 23),
+                    start: "",
+                    end: "",
                 },
                 masks: {
                     input: 'YYYY-MM-DD',
                 },
+                
             };
+        },
+        methods: {
+            calculateEndOfCalendar(){
+                let date = new Date();
+                date.setDate(date.getDate() + 365);
+                this.endOfCalendar = date.toString();
+            },
+            onInputStartValueUpdate(){
+                this.$emit("onInputStartChange", this.range.start);
+            },
+            onInputEndValueUpdate(){
+                this.$emit("onInputEndChange", this.range.end);
+            }
+        },
+        mounted(){
+            this.calculateEndOfCalendar()
         },
     };
 </script>

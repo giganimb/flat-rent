@@ -38,7 +38,7 @@
 
         <v-row justify="space-around">
             <v-card>
-                <DateRangePickerVue></DateRangePickerVue>
+                <DateRangePickerVue @onInputStartChange="getStartDate" @onInputEndChange="getEndDate"></DateRangePickerVue>
             </v-card>
         </v-row>
 
@@ -101,8 +101,8 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
         methods: {
             createOrder() {
                 console.log("in create");
-                this.$refs.form.validate()
-                if(this.name && this.surname && this.patronymic && this.phone && this.startDate && this.endDate){
+                console.log(this.order)
+                if(this.order.name && this.order.surname && this.order.patronymic && this.order.phone && this.order.startDate && this.order.endDate){
                     console.log("created");
                     this.order.id = Date.now();
                     this.$emit("clickOnCreateButton", this.order);
@@ -114,12 +114,19 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
                         startDate: "",
                         endDate: "",
                     };
+                    this.$refs.form.reset();
                 }
             },
             resetForm() {
                 this.$refs.form.reset()
                 this.$emit("clickOnCancelBtn");
             },
+            getStartDate(start){
+                this.order.startDate = start;
+            },
+            getEndDate(end){
+                this.order.endDate = end;
+            }
         },
     }
 </script>
