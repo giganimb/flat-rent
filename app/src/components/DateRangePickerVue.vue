@@ -12,8 +12,9 @@
             :masks="masks"
             is-range
             :popover="{ visibility: 'none' }"
+            @input="onSelectDate"
         >
-            <template v-slot="{ inputValue, togglePopover, inputEvents, isDragging }">
+            <template v-slot="{ inputValue, inputEvents, togglePopover, isDragging }">
                 <div class="flex flex-col sm:flex-row justify-start items-center">
                     <v-row>
                         <v-col>
@@ -79,6 +80,9 @@
             },
             onInputEndValueUpdate(){
                 this.$emit("onInputEndChange", this.range.end);
+            },
+            onSelectDate(){
+                this.$emit("selectRange", this.range);
             }
         },
         mounted(){

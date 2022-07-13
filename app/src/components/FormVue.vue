@@ -38,7 +38,7 @@
 
         <v-row justify="space-around">
             <v-card>
-                <DateRangePickerVue @onInputStartChange="getStartDate" @onInputEndChange="getEndDate"></DateRangePickerVue>
+                <DateRangePickerVue @onInputStartChange="getStartDate" @onInputEndChange="getEndDate" @selectRange="getRange"></DateRangePickerVue>
             </v-card>
         </v-row>
 
@@ -126,6 +126,10 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
             },
             getEndDate(end){
                 this.order.endDate = end;
+            },
+            getRange(range){
+                this.order.startDate = range.start;
+                this.order.endDate = range.end;
             }
         },
     }
