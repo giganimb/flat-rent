@@ -85,10 +85,16 @@
             },
             onSelectDate(){
                 this.$emit("selectRange", this.range);
+            },
+            addSelectedDate(){
+                if(this.selectedDate){
+                    this.$emit("selectDate", this.range)
+                }
             }
         },
         mounted(){
             this.calculateEndOfCalendar();
+            this.addSelectedDate();
         },
     };
 </script>

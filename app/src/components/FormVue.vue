@@ -38,10 +38,11 @@
 
         <v-row justify="space-around">
             <v-card>
-                <DateRangePickerVue 
+                <DateRangePickerVue
                 @onInputStartChange="getStartDate" 
                 @onInputEndChange="getEndDate" 
                 @selectRange="getRange"
+                @selectDate="getRange"
                 :selectedDate="selectedDate">
                 </DateRangePickerVue>
             </v-card>

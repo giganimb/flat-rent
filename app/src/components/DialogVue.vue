@@ -24,7 +24,12 @@
         </v-card-title>
 
         <v-card-text>
-          <FormVue @clickOnCancelBtn="dialog = false" @clickOnCreateButton="createOrder" :selectedDate="selectedDate"></FormVue>
+          <FormVue
+          v-model="selectedDate" 
+          @clickOnCancelBtn="dialog = false" 
+          @clickOnCreateButton="createOrder" 
+          :selectedDate="selectedDate">
+          </FormVue>
         </v-card-text>
         
       </v-card>
@@ -47,7 +52,6 @@
                 dialog: false,
                 selectedDate:{
                   type: Date,
-                  require: true
                 }
             }
         },
