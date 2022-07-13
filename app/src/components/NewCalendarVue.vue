@@ -141,7 +141,7 @@ export default {
   methods: {
     onClickDay(day) {
         if(day.day >= (new Date()).getDate() && !day.attributes[0]){
-          this.$emit("clickOnDay");
+          this.$emit("clickOnDay", day);
         }
     },
     calculateEndOfCalendar(){

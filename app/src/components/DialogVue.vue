@@ -1,7 +1,7 @@
 <template>
   <div justify="center">
 
-    <NewCalendarVue @clickOnDay="dialog = true"></NewCalendarVue>
+    <NewCalendarVue @clickOnDay="onClickDay"></NewCalendarVue>
 
     <div class="text-center">
       <v-btn
@@ -24,7 +24,7 @@
         </v-card-title>
 
         <v-card-text>
-          <FormVue @clickOnCancelBtn="dialog = false" @clickOnCreateButton="createOrder"></FormVue>
+          <FormVue @clickOnCancelBtn="dialog = false" @clickOnCreateButton="createOrder" :selectedDate="selectedDate"></FormVue>
         </v-card-text>
         
       </v-card>
@@ -45,11 +45,19 @@
         data () {
             return {
                 dialog: false,
+                selectedDate:{
+                  type: Date,
+                  require: true
+                }
             }
         },
         methods: {
           createOrder(){
             
+          },
+          onClickDay(day){
+            this.dialog = true;
+            this.selectedDate = day.date;
           }
         }
     }

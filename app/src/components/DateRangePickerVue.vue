@@ -60,14 +60,16 @@
             return {
                 endOfCalendar: "",
                 range: {
-                    start: "",
-                    end: "",
+                    start: new Date(this.selectedDate),
+                    end: new Date(this.selectedDate),
                 },
                 masks: {
                     input: 'YYYY-MM-DD',
                 },
-                
             };
+        },
+        props:{
+            selectedDate: Date,
         },
         methods: {
             calculateEndOfCalendar(){
@@ -86,7 +88,7 @@
             }
         },
         mounted(){
-            this.calculateEndOfCalendar()
+            this.calculateEndOfCalendar();
         },
     };
 </script>

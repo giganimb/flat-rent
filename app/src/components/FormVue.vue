@@ -38,7 +38,12 @@
 
         <v-row justify="space-around">
             <v-card>
-                <DateRangePickerVue @onInputStartChange="getStartDate" @onInputEndChange="getEndDate" @selectRange="getRange"></DateRangePickerVue>
+                <DateRangePickerVue 
+                @onInputStartChange="getStartDate" 
+                @onInputEndChange="getEndDate" 
+                @selectRange="getRange"
+                :selectedDate="selectedDate">
+                </DateRangePickerVue>
             </v-card>
         </v-row>
 
@@ -70,6 +75,9 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
         components: {
           DateRangePickerVue,
         },
+        props:{
+            selectedDate: Date,
+        },
         data: () => ({
             valid: true,
             nameRules: [
@@ -100,10 +108,7 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
 
         methods: {
             createOrder() {
-                console.log("in create");
-                console.log(this.order)
                 if(this.order.name && this.order.surname && this.order.patronymic && this.order.phone && this.order.startDate && this.order.endDate){
-                    console.log("created");
                     this.order.id = Date.now();
                     this.$emit("clickOnCreateButton", this.order);
                     this.order = {
@@ -115,6 +120,9 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
                         endDate: "",
                     };
                     this.$refs.form.reset();
+                }
+                else{
+                    this.$refs.form.validate();
                 }
             },
             resetForm() {
