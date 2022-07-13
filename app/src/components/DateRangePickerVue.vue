@@ -16,7 +16,7 @@
                         <v-col>
                             <div class="flex items-center">
                                 <div style="margin-top: 16px; margin-left: 10px">
-                                    <v-img @click="togglePopover()" src="../../public/calendar.png" width="20px" height="20px" style="cursor: pointer;"/>
+                                    <v-img @click="togglePopover()" src="../../public/calendar.png" width="24px" height="24px" style="cursor: pointer;"/>
                                 </div>
                                 <v-card style="background-color: #BBDEFB; margin: 10px;">
                                     <input
