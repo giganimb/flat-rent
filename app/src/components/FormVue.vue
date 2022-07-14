@@ -39,6 +39,7 @@
         <v-row justify="space-around">
             <v-card>
                 <DateRangePickerVue
+                ref="dateRangePicker"
                 @onInputStartChange="getStartDate" 
                 @onInputEndChange="getEndDate" 
                 @selectRange="getRange"
@@ -121,6 +122,7 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
                         endDate: "",
                     };
                     this.$refs.form.reset();
+                    this.$refs.dateRangePicker.clearInputs();
                 }
                 else{
                     this.$refs.form.validate();
@@ -128,6 +130,7 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
             },
             resetForm() {
                 this.$refs.form.reset()
+                this.$refs.dateRangePicker.clearInputs();
                 this.$emit("clickOnCancelBtn");
             },
             getStartDate(start){

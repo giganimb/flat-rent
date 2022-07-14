@@ -1,7 +1,9 @@
 <template>
   <div justify="center">
 
-    <NewCalendarVue @clickOnDay="onClickDay"></NewCalendarVue>
+    <NewCalendarVue 
+    @clickOnDay="onClickDay">
+    </NewCalendarVue>
 
     <div class="text-center">
       <v-btn
@@ -49,10 +51,11 @@
         },
         data () {
             return {
-                dialog: false,
-                selectedDate:{
-                  type: Date,
-                }
+              dialog: false,
+              selectedDate:{
+                type: Date,
+              },
+              
             }
         },
         methods: {
