@@ -40,6 +40,7 @@
             <v-card>
                 <DateRangePickerVue
                 ref="dateRangePicker"
+                v-model="order.range"
                 @onInputStartChange="getStartDate" 
                 @onInputEndChange="getEndDate" 
                 @selectRange="getRange"
@@ -103,14 +104,16 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
                 surname: "",
                 patronymic: "",
                 phone: "",
-                startDate: "",
-                endDate: "",
+                range: {
+                    startDate: "",
+                    endDate: "",
+                },
             }
         }),
 
         methods: {
             createOrder() {
-                if(this.order.name && this.order.surname && this.order.patronymic && this.order.phone && this.order.startDate && this.order.endDate){
+                if(this.order.name && this.order.surname && this.order.patronymic && this.order.phone && this.order.range.startDate && this.order.range.endDate){
                     this.order.id = Date.now();
                     this.$emit("clickOnCreateButton", this.order);
                     this.order = {
@@ -118,8 +121,10 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
                         surname: "",
                         patronymic: "",
                         phone: "",
-                        startDate: "",
-                        endDate: "",
+                        range: {
+                            startDate: "",
+                            endDate: "",
+                        },
                     };
                     this.$refs.form.reset();
                     this.$refs.dateRangePicker.clearInputs();
@@ -134,14 +139,14 @@ import DateRangePickerVue from '@/components/DateRangePickerVue';
                 this.$emit("clickOnCancelBtn");
             },
             getStartDate(start){
-                this.order.startDate = start;
+                this.order.range.startDate = start;
             },
             getEndDate(end){
-                this.order.endDate = end;
+                this.order.range.endDate = end;
             },
             getRange(range){
-                this.order.startDate = range.start;
-                this.order.endDate = range.end;
+                this.order.range.startDate = range.start;
+                this.order.range.endDate = range.end;
             }
         },
     }
