@@ -44,7 +44,7 @@
   import OrderCreateForm from '@/components/OrderCreateForm';
   import NewCalendar from '@/components/NewCalendar';
     export default{
-        name: "order-create-dialog",
+        name: "order-create",
 
         components: {
           OrderCreateForm,

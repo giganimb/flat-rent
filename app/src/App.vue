@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <order-create-dialog></order-create-dialog>
+    <order-create></order-create>
   </v-app>
 </template>
 
 <script>
-import OrderCreateDialog from '@/components/OrderCreateDialog.vue'
+import OrderCreate from '@/components/OrderCreate.vue'
 
 export default {
   name: 'App',
 
   components: {
-    OrderCreateDialog,
+    OrderCreate,
   },
 
   data: () => ({
