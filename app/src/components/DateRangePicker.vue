@@ -55,7 +55,7 @@
 
 <script>
     export default {
-        name: "DateRangePickerVue",
+        name: "date-range-picker",
         data() {
             return {
                 endOfCalendar: "",
@@ -88,6 +88,8 @@
             },
             addSelectedDate(){
                 if(this.selectedDate){
+                    this.range.start = this.selectedDate;
+                    this.range.end = this.selectedDate;
                     this.$emit("selectDate", this.range)
                 }
             },

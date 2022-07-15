@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "NewCalendarVue",
+  name: "new-calendar",
   data() {
     const now = new Date();
     const month = now.getMonth();

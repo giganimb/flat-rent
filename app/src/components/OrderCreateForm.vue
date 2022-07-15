@@ -38,7 +38,7 @@
 
         <v-row justify="space-around">
             <v-card>
-                <DateRangePickerVue
+                <date-range-picker
                 ref="dateRangePicker"
                 v-model="order.range"
                 @onInputStartChange="getStartDate" 
@@ -46,7 +46,7 @@
                 @selectRange="getRange"
                 @selectDate="getRange"
                 :selectedDate="selectedDate">
-                </DateRangePickerVue>
+                </date-range-picker>
             </v-card>
         </v-row>
 
@@ -72,11 +72,11 @@
 </template>
 
 <script>
-import DateRangePickerVue from '@/components/DateRangePickerVue';
+import DateRangePicker from '@/components/DateRangePicker';
     export default{
-        name: "FormVue",
+        name: "order-create-form",
         components: {
-          DateRangePickerVue,
+          DateRangePicker,
         },
         props:{
             selectedDate: Date,

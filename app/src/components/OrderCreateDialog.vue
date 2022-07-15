@@ -1,9 +1,9 @@
 <template>
   <div justify="center">
 
-    <NewCalendarVue 
+    <new-calendar 
     @clickOnDay="onClickDay">
-    </NewCalendarVue>
+    </new-calendar>
 
     <div class="text-center">
       <v-btn
@@ -26,12 +26,13 @@
         </v-card-title>
 
         <v-card-text>
-          <FormVue
+          <order-create-form
+          v-if="dialog"
           v-model="selectedDate" 
           @clickOnCancelBtn="dialog = false" 
           @clickOnCreateButton="createOrder" 
           :selectedDate="selectedDate">
-          </FormVue>
+          </order-create-form>
         </v-card-text>
         
       </v-card>
@@ -40,14 +41,14 @@
 </template>
 
 <script>
-  import FormVue from '@/components/FormVue';
-  import NewCalendarVue from '@/components/NewCalendarVue';
+  import OrderCreateForm from '@/components/OrderCreateForm';
+  import NewCalendar from '@/components/NewCalendar';
     export default{
-        name: "DialogVue",
+        name: "order-create-dialog",
 
         components: {
-          FormVue,
-          NewCalendarVue,
+          OrderCreateForm,
+          NewCalendar,
         },
         data () {
             return {

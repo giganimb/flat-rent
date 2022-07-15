@@ -17,7 +17,7 @@
 
 <script>
   export default {
-    name: "CalendarVue",
+    name: "calendar",
     components: {
     },
     data(){
