@@ -29,6 +29,7 @@
                                         :value="inputValue.start"
                                         v-on="inputEvents.start"
                                         @input="onInputStartValueUpdate"
+                                        :placeholder="formatDate(new Date())"
                                     />
                                 </v-card>
                             </div>
@@ -42,6 +43,7 @@
                                         :value="inputValue.end"
                                         v-on="inputEvents.end"
                                         @input="onInputEndValueUpdate"
+                                        :placeholder="formatDate(new Date())"
                                     />
                                 </v-card>
                             </div>
@@ -64,7 +66,7 @@
                     end: new Date(this.selectedDate),
                 },
                 masks: {
-                    input: 'YYYY-MM-DD',
+                    input: 'DD.MM.YYYY',
                 },
             };
         },
@@ -91,6 +93,18 @@
                     this.$emit("selectDate", this.range)
                 }
             },
+            formatDate(date) {
+                var dd = date.getDate();
+                if (dd < 10) dd = '0' + dd;
+
+                var mm = date.getMonth() + 1;
+                if (mm < 10) mm = '0' + mm;
+
+                var yy = date.getFullYear();
+                if (yy < 10) yy = '0' + yy;
+
+                return dd + '.' + mm + '.' + yy;
+            }
         },
         mounted(){
             this.calculateEndOfCalendar();
