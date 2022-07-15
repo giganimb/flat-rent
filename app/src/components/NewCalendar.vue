@@ -1,5 +1,20 @@
 <template>
   <div class="text-center section">
+    <v-alert
+      prominent
+      type="error"
+      v-model="alert"
+      @click="onClickAlertButton"
+    >
+      <v-row align="center">
+        <v-col class="grow">
+          Выберите свободную действительную дату
+        </v-col>
+        <v-col>
+          <v-btn color="orange" >Ок</v-btn>
+        </v-col>
+      </v-row>
+    </v-alert>
     <vc-calendar
       class="custom-calendar max-w-full"
       :masks="masks"
@@ -44,6 +59,7 @@ export default {
     const day = now.getDate();
     return {
       endOfCalendar: "",
+      alert: false,
       today: new Date(year, month, day) * 1,
       masks: {
         weekdays: "WWW"
@@ -139,16 +155,23 @@ export default {
     };
   },
   methods: {
-    onClickDay(day) {
-        if(day.day >= (new Date()).getDate() && !day.attributes[0]){
-          this.$emit("clickOnDay", day);
-        }
-    },
     calculateEndOfCalendar(){
       let date = new Date();
       date.setDate(date.getDate() + 365);
       this.endOfCalendar = date.toString();
     },
+    onClickDay(day) {
+        if(day.day >= (new Date()).getDate() && !day.attributes[0]){
+          this.$emit("clickOnDay", day);
+          this.alert = false;
+        }
+        else{
+          this.alert = true;
+        }
+    },
+    onClickAlertButton(){
+      this.alert = false;
+    }
   },
   mounted(){
     this.calculateEndOfCalendar()

@@ -28,9 +28,7 @@
         <v-card-text>
           <order-create-form
           v-if="dialog"
-          v-model="selectedDate" 
-          @clickOnCancelBtn="dialog = false" 
-          @clickOnCreateButton="createOrder" 
+          @clickOnCancelBtn="dialog = false; selectedDate = ''"
           :selectedDate="selectedDate">
           </order-create-form>
         </v-card-text>
@@ -56,13 +54,9 @@
               selectedDate:{
                 type: Date,
               },
-              
             }
         },
         methods: {
-          createOrder(){
-            
-          },
           onClickDay(day){
             this.dialog = true;
             this.selectedDate = day.date;

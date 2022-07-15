@@ -40,7 +40,6 @@
             <v-card>
                 <date-range-picker
                 ref="dateRangePicker"
-                v-model="order.range"
                 @onInputStartChange="getStartDate" 
                 @onInputEndChange="getEndDate" 
                 @selectRange="getRange"
@@ -116,18 +115,7 @@ import DateRangePicker from '@/components/DateRangePicker';
                 if(this.order.name && this.order.surname && this.order.patronymic && this.order.phone && this.order.range.startDate && this.order.range.endDate){
                     this.order.id = Date.now();
                     this.$emit("clickOnCreateButton", this.order);
-                    this.order = {
-                        name: "",
-                        surname: "",
-                        patronymic: "",
-                        phone: "",
-                        range: {
-                            startDate: "",
-                            endDate: "",
-                        },
-                    };
-                    this.$refs.form.reset();
-                    this.$refs.dateRangePicker.clearInputs();
+                    this.resetForm();
                 }
                 else{
                     this.$refs.form.validate();
@@ -135,7 +123,6 @@ import DateRangePicker from '@/components/DateRangePicker';
             },
             resetForm() {
                 this.$refs.form.reset()
-                this.$refs.dateRangePicker.clearInputs();
                 this.$emit("clickOnCancelBtn");
             },
             getStartDate(start){

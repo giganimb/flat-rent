@@ -88,15 +88,9 @@
             },
             addSelectedDate(){
                 if(this.selectedDate){
-                    this.range.start = this.selectedDate;
-                    this.range.end = this.selectedDate;
                     this.$emit("selectDate", this.range)
                 }
             },
-            clearInputs(){
-                this.range.start = "";
-                this.range.end = "";
-            }
         },
         mounted(){
             this.calculateEndOfCalendar();
