@@ -1,9 +1,10 @@
 <template>
   <div justify="center">
 
-    <new-calendar 
+    <main-calendar
+    ref="calendarFunctions"
     @clickOnDay="onClickDay">
-    </new-calendar>
+    </main-calendar>
 
     <div class="text-center">
       <v-btn
@@ -29,6 +30,8 @@
           <order-create-form
           v-if="dialog"
           @clickOnCancelBtn="dialog = false; selectedDate = ''"
+          @onErrorMessage="sendErrorNotification"
+          @onCreatedOrder="sendSuccessNotification"
           :selectedDate="selectedDate">
           </order-create-form>
         </v-card-text>
@@ -40,13 +43,13 @@
 
 <script>
   import OrderCreateForm from '@/components/OrderCreateForm';
-  import NewCalendar from '@/components/NewCalendar';
+  import MainCalendar from '@/components/MainCalendar';
     export default{
         name: "order-create",
 
         components: {
           OrderCreateForm,
-          NewCalendar,
+          MainCalendar,
         },
         data () {
             return {
@@ -60,6 +63,13 @@
           onClickDay(day){
             this.dialog = true;
             this.selectedDate = day.date;
+          },
+          sendErrorNotification(){
+            this.$refs.calendarFunctions.showErrorAlert();
+          },
+          sendSuccessNotification(){
+            this.$refs.calendarFunctions.showSuccessAlert();
+            this.$refs.calendarFunctions.updateCalendar();
           }
         }
     }

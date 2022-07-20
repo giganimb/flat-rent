@@ -28,6 +28,28 @@ const orderSchema = new Schema({
             required: true,
         },
     },
+    shortInfo:{
+        customData: {
+            title: {
+              type: String,
+              required: true
+            },
+            class: {
+              type: String,
+              required: true
+            },
+        },
+        dates: {
+            start: {
+            type: Date,
+            required: true
+            },
+            end: {
+            type: Date,
+            required: true
+            },
+        }
+    }
 });
 
 module.exports = mongoose.model("Order", orderSchema);

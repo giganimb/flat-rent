@@ -72,6 +72,7 @@
 
 <script>
 import DateRangePicker from '@/components/DateRangePicker';
+import OrderDataService from "../services/OrderDataService";
     export default{
         name: "order-create-form",
         components: {
@@ -96,7 +97,7 @@ import DateRangePicker from '@/components/DateRangePicker';
             ],
             phoneRules: [
                 v => !!v || 'Укажите номер телефона',
-                v => /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/.test(v) || 'E-mail must be valid',
+                v => /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/.test(v) || 'Телефон должен быть действительным',
             ],
             order: {
                 name: "",
@@ -113,9 +114,25 @@ import DateRangePicker from '@/components/DateRangePicker';
         methods: {
             createOrder() {
                 if(this.order.name && this.order.surname && this.order.patronymic && this.order.phone && this.order.range.startDate && this.order.range.endDate){
-                    this.order.id = Date.now();
-                    this.$emit("clickOnCreateButton", this.order);
-                    this.resetForm();
+                    let isError = false;
+                    OrderDataService.create(this.order)
+                        .then(response => {
+                            if(response.data.errorMessage){
+                                isError = true;
+                            }
+                        })
+                        .then(() => {
+                            this.resetForm();
+                            if(isError){
+                                this.$emit("onErrorMessage");
+                            }
+                            else{
+                                this.$emit("onCreatedOrder");
+                            }
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
                 }
                 else{
                     this.$refs.form.validate();

@@ -2,19 +2,52 @@
   <div class="text-center section">
     <v-alert
       prominent
-      type="error"
-      v-model="alert"
-      @click="onClickAlertButton"
+      type="warning"
+      v-model="warningAlert"
+      class="alert"
     >
       <v-row align="center">
         <v-col class="grow">
           Выберите свободную действительную дату
         </v-col>
         <v-col>
-          <v-btn color="orange" >Ок</v-btn>
+          <v-btn color="red" @click="onClickAlertButton">Ок</v-btn>
         </v-col>
       </v-row>
     </v-alert>
+
+    <v-alert
+      prominent
+      type="error"
+      v-model="errorAlert"
+      class="alert"
+    >
+      <v-row align="center">
+        <v-col class="grow">
+          Не удалось сохранить заказ, выбранная вами дата уже зарезервирована
+        </v-col>
+        <v-col>
+          <v-btn color="orange" @click="onClickAlertButton">Ок</v-btn>
+        </v-col>
+      </v-row>
+    </v-alert>
+
+    <v-alert
+      prominent
+      type="success"
+      v-model="successAlert"
+      class="alert"
+    >
+      <v-row align="center">
+        <v-col class="grow">
+          Заказ успешно сохранен
+        </v-col>
+        <v-col>
+          <v-btn color="orange" @click="onClickAlertButton">Ок</v-btn>
+        </v-col>
+      </v-row>
+    </v-alert>
+
     <vc-calendar
       class="custom-calendar max-w-full"
       :masks="masks"
@@ -50,8 +83,9 @@
 
 
 <script>
+import OrderDataService from "../services/OrderDataService";
 export default {
-  name: "new-calendar",
+  name: "main-calendar",
   data() {
     const now = new Date();
     const month = now.getMonth();
@@ -59,93 +93,15 @@ export default {
     const day = now.getDate();
     return {
       endOfCalendar: "",
-      alert: false,
+      warningAlert: false,
+      errorAlert: false,
+      successAlert: false,
       today: new Date(year, month, day) * 1,
       masks: {
         weekdays: "WWW"
       },
-      attributes: [
-        {
-          key: 1,
-          customData: {
-            title: "Lunch with mom.",
-            class: "bg-red-600 text-white"
-          },
-          dates: new Date(year, month, 1)
-        },
-        {
-          key: 2,
-          customData: {
-            title: "Take Noah to basketball practice",
-            class: "bg-blue-500 text-white"
-          },
-          dates: new Date(year, month, 2)
-        },
-        {
-          key: 3,
-          customData: {
-            title: "Noah's basketball game.",
-            class: "bg-blue-500 text-white"
-          },
-          dates: new Date(year, month, 5)
-        },
-        {
-          key: 4,
-          customData: {
-            title: "Take car to the shop",
-            class: "bg-indigo-500 text-white"
-          },
-          dates: new Date(year, month, 5)
-        },
-        {
-          key: 4,
-          customData: {
-            title: "Meeting with new client.",
-            class: "bg-teal-500 text-white"
-          },
-          dates: new Date(year, month, 7)
-        },
-        {
-          key: 5,
-          customData: {
-            title: "Mia's gymnastics practice.",
-            class: "bg-pink-500 text-white"
-          },
-          dates: new Date(year, month, 11)
-        },
-        {
-          key: 6,
-          customData: {
-            title: "Cookout with friends.",
-            class: "bg-orange-500 text-white"
-          },
-          dates: { months: 5, ordinalWeekdays: { 2: 1 } }
-        },
-        {
-          key: 7,
-          customData: {
-            title: "Mia's gymnastics recital.",
-            class: "bg-pink-500 text-white"
-          },
-          dates: new Date(year, month, 22)
-        },
-        {
-          key: 8,
-          customData: {
-            title: "Visit great grandma.",
-            class: "bg-red-600 text-white"
-          },
-          dates: new Date(year, month, 25)
-        },
-        {
-          key: "today",
-          customData: {
-            title: "Visit great grandma.",
-            class: "bg-red-600 text-white"
-          },
-          dates: new Date()
-        }
-      ],
+      orders: [],
+      attributes: [],
       dayEvents: {
         click: a => {
           // eslint-disable-next-line no-console
@@ -163,24 +119,94 @@ export default {
     onClickDay(day) {
         if(day.day >= (new Date()).getDate() && !day.attributes[0]){
           this.$emit("clickOnDay", day);
-          this.alert = false;
+          this.warningAlert = false;
         }
         else{
-          this.alert = true;
+          this.warningAlert = true;
         }
     },
     onClickAlertButton(){
-      this.alert = false;
+      this.warningAlert = false;
+      this.errorAlert = false;
+      this.successAlert = false;
+    },
+    retrieveOrders() {
+      OrderDataService.getAll()
+        .then(response => {
+          this.orders = response.data;
+          this.setOrdersToCalendarAttrs();
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    setOrdersToCalendarAttrs(){
+      let counter = 0;
+      for(let ord of this.orders){
+        let attr = {
+          key: {
+            type: Number,
+            required: true
+          },
+          customData: {
+            title: {
+              type: String,
+              required: true
+            },
+            class: {
+              type: String,
+              required: true
+            },
+          },
+          dates: {
+            start: {
+              type: Date,
+              required: true
+            },
+            end: {
+              type: Date,
+              required: true
+            },
+          }
+        };
+        attr.key = counter;
+        attr.customData.title = ord.shortInfo.customData.title;
+        attr.customData.class = ord.shortInfo.customData.class;
+        attr.dates.start = ord.shortInfo.dates.start;
+        attr.dates.end = ord.shortInfo.dates.end;
+        counter++;
+        this.attributes.push(attr);
+      }
+    },
+    updateCalendar(){
+      this.retrieveOrders();
+    },
+    showErrorAlert(){
+      this.errorAlert = true;
+    },
+    showSuccessAlert(){
+      this.successAlert = true;
     }
   },
   mounted(){
-    this.calculateEndOfCalendar()
+    this.calculateEndOfCalendar();
+    this.retrieveOrders();
   },
 };
 </script>
 
 
 <style>
+.alert{
+  position: fixed; 
+  z-index: 100; 
+  width: 100%;
+}
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
 .flex-col {
   flex-direction: column;
 }
