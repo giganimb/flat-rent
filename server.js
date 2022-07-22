@@ -1,12 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const cors = require("cors");
 require("dotenv").config();
 const path = __dirname + '/app/dist/';
 
 const app = express();
 
 app.use(express.static(path));
+
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    allowedHeaders: 'Authorization,Accept,Accept-Language,Content-Language,Content-Type,Access-Control-Allow-Origin',
+    exposedHeaders: 'Authorization,X-Refresh-Token',
+    methods: 'GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH',
+};
+
+app.use("/", cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(morgan("dev"));
