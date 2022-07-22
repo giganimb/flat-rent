@@ -2,22 +2,6 @@
   <div class="text-center section">
     <v-alert
       prominent
-      type="warning"
-      v-model="warningAlert"
-      class="alert"
-    >
-      <v-row align="center">
-        <v-col class="grow">
-          Выберите свободную действительную дату
-        </v-col>
-        <v-col>
-          <v-btn color="red" @click="onClickAlertButton">Ок</v-btn>
-        </v-col>
-      </v-row>
-    </v-alert>
-
-    <v-alert
-      prominent
       type="error"
       v-model="errorAlert"
       class="alert"
@@ -93,7 +77,6 @@ export default {
     const day = now.getDate();
     return {
       endOfCalendar: "",
-      warningAlert: false,
       errorAlert: false,
       successAlert: false,
       today: new Date(year, month, day) * 1,
@@ -119,14 +102,9 @@ export default {
     onClickDay(day) {
         if(day.day >= (new Date()).getDate() && !day.attributes[0]){
           this.$emit("clickOnDay", day);
-          this.warningAlert = false;
-        }
-        else{
-          this.warningAlert = true;
         }
     },
     onClickAlertButton(){
-      this.warningAlert = false;
       this.errorAlert = false;
       this.successAlert = false;
     },
