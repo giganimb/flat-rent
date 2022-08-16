@@ -15,20 +15,25 @@ getOrders = (req, res) => {
 }
 
 createOrder = (req, res) => {
-    let isDateBooked = false;
+    let isDateNotBooked = true;
     Order.find()
          .then(data => {
           for(order of data){
             let requestStartDate = new Date(req.body.range.startDate);
             let requestEndDate = new Date(req.body.range.endDate);
-            if(!(order.range.startDate > requestStartDate && requestEndDate < order.range.endDate ||
-              order.range.startDate < requestStartDate && requestEndDate > order.range.endDate)){
-              isDateBooked = true;
+            console.log(order.range.startDate > requestStartDate && requestEndDate < order.range.startDate);
+            console.log(order.range.endDate < requestStartDate && requestEndDate > order.range.endDate);
+            if(order.range.startDate > requestStartDate && requestEndDate < order.range.startDate ||
+              order.range.endDate < requestStartDate && requestEndDate > order.range.endDate){
+                isDateNotBooked = isDateNotBooked & true;
+            }
+            else{
+              isDateNotBooked = false;
             }
           }
         })
         .then(() => {
-          if(!isDateBooked){
+          if(isDateNotBooked){
             const order = new Order({
               name: req.body.name,
               surname: req.body.surname,
