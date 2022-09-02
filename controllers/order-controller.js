@@ -21,8 +21,6 @@ createOrder = (req, res) => {
           for(order of data){
             let requestStartDate = new Date(req.body.range.startDate);
             let requestEndDate = new Date(req.body.range.endDate);
-            console.log(order.range.startDate > requestStartDate && requestEndDate < order.range.startDate);
-            console.log(order.range.endDate < requestStartDate && requestEndDate > order.range.endDate);
             if(order.range.startDate > requestStartDate && requestEndDate < order.range.startDate ||
               order.range.endDate < requestStartDate && requestEndDate > order.range.endDate){
                 isDateNotBooked = isDateNotBooked & true;
