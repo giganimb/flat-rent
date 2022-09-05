@@ -44,6 +44,7 @@
 <script>
   import OrderCreateForm from '@/components/OrderCreateForm';
   import MainCalendar from '@/components/MainCalendar';
+  import { mapState, mapMutations } from 'vuex';
     export default{
         name: "order-create",
 
@@ -53,7 +54,6 @@
         },
         data () {
             return {
-              dialog: false,
               selectedDate:{
                 type: Date,
               },
@@ -70,7 +70,21 @@
           sendSuccessNotification(){
             this.$refs.calendarFunctions.showSuccessAlert();
             this.$refs.calendarFunctions.updateCalendar();
-          }
+          },
+          ...mapMutations(['setDialog'])
+        },
+        computed: {
+          ...mapState({
+                dialogState: state => state.dialog,
+            }),
+          dialog: {
+           get(){
+             return this.dialogState
+           },
+           set(boolValue){
+             return this.setDialog(boolValue);
+           } 
+        }
         }
     }
 </script>
