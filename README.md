@@ -25,12 +25,12 @@
 ## App view
 ### Start page: 
 
-![](C:\Users\giganimb\AppData\Roaming\Typora\typora-user-images\image-20220913123203897.png) 
+![startPageScreen](./screenshots/start_page.png)
 
 ### Order popup:
 
-![](C:\Users\giganimb\AppData\Roaming\Typora\typora-user-images\image-20220913123420485.png)
+![orderPopupScreen](./screenshots/order_popup.png)
 
 ### Daterange picker:
 
-![](C:\Users\giganimb\AppData\Roaming\Typora\typora-user-images\image-20220913123635956.png)
+![dateRangePickerScreen](./screenshots/daterangepicker.png)
